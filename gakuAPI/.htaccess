@@ -1,0 +1,23 @@
+#Turn rewrite engine on
+Options +FollowSymlinks
+RewriteEngine on
+
+# map neat URL to internal URL
+RewriteRule ^commandes/$ index.php?data=commandes [nc]
+RewriteRule ^commandes/([0-9]+)/$ index.php?data=commandes&idcommande=$1 [nc]
+RewriteRule ^commandes/([0-9]+)/contenu/$ index.php?data=commandes&contenu=true&idcommande=$1 [nc]
+RewriteRule ^commandes/([0-9]+)/statuts/$ index.php?data=commandes&statuts=true&idcommande=$1 [nc]
+RewriteRule ^albums/$ index.php?data=albums [nc]
+RewriteRule ^albums/([0-9]+)/$ index.php?data=albums&idalbum=$1 [nc]
+RewriteRule ^albums/([0-9]+)/commandes/$ index.php?data=albums&idalbum=$1&commandes=true [nc]
+RewriteRule ^events/$ index.php?data=events [nc]
+RewriteRule ^events/([a-zA-Z0-9_-]{1,5})/editions/$ index.php?data=events&idEvent=$1&editions=true [nc]
+RewriteRule ^utilisateur/([0-9]+)/$ index.php?data=utilisateur&idutilisateur=$1 [nc]
+RewriteRule ^seuil/$ index.php?action=seuil [nc]
+RewriteRule ^commandes/([0-9]+)/update/$ index.php?action=updateCommande&idcommande=$1 [nc]
+#RewriteRule ^evenements/$ index.php?data=evenement [nc]
+#RewriteRule ^coVoiturages/$ index.php?data=coVoiturage [nc]
+#RewriteRule ^connexion/$ index.php?action=authentification [nc]
+#RewriteRule ^coVoiturage/delete/([0-9]+)/$ index.php?idCovoit=$1 [nc,qsa]
+#RewriteRule ^coVoiturage/insert/$ index.php?action=ajoutCoVoit [nc]
+#RewriteRule ^personne/insert/$ index.php?action=ajoutPersonne [nc]

@@ -1,0 +1,59 @@
+is_global = true
+build_property.TargetFramework = net7.0-windows10.0.19041.0
+build_property.TargetPlatformMinVersion = 10.0.17763.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 9A19103F-16F7-4668-BE54-9A1E7A4F7556
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Gaku
+build_property.ProjectDir = C:\Users\Damien\source\repos\GakuApp\Gaku\
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/MenuPrincipal.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.MenuPrincipal.xaml
+build_metadata.AdditionalFiles.TargetPath = MenuPrincipal.xaml
+build_metadata.AdditionalFiles.RelativePath = MenuPrincipal.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/PageDetailProduit.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.PageDetailProduit.xaml
+build_metadata.AdditionalFiles.TargetPath = PageDetailProduit.xaml
+build_metadata.AdditionalFiles.RelativePath = PageDetailProduit.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/PageGestionCommandes.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.PageGestionCommandes.xaml
+build_metadata.AdditionalFiles.TargetPath = PageGestionCommandes.xaml
+build_metadata.AdditionalFiles.RelativePath = PageGestionCommandes.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/PageGestionStock.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.PageGestionStock.xaml
+build_metadata.AdditionalFiles.TargetPath = PageGestionStock.xaml
+build_metadata.AdditionalFiles.RelativePath = PageGestionStock.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/Damien/source/repos/GakuApp/Gaku/Resources/Styles/styles.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = Gaku.Resources.Styles.styles.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\styles.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\styles.css

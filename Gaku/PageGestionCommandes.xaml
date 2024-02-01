@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gaku.PageGestionCommandes"
+             x:Name="contentPageGestionCommandes"
+             Title="Gestions des commandes"
+             NavigationPage.HasNavigationBar="False">
+    <AbsoluteLayout>
+        <Button x:Name="btnBack" Clicked="btnBack_Clicked" CornerRadius="10000" ImageSource="arrowleft_white.png" Padding="10" Background="Black"  AbsoluteLayout.LayoutBounds="15,15" WidthRequest="40" HeightRequest="40" ZIndex="5"/>
+        <!-- Container pour centrer les éléments du sidemenu -->
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <VerticalStackLayout WidthRequest="230" Grid.Column="0" Margin="0,80" HorizontalOptions="Center">
+                <Label Text="Filtres" Margin="0,0,0,30" FontSize="30" FontAttributes="Bold"/>
+                <Label Text="Rechercher" TextColor="Purple" FontAttributes="Bold"/>
+                <Entry x:Name="entryRecherche" Placeholder="Saisissez votre recherche..." TextChanged="entryRecherche_TextChanged"></Entry>
+                <Label Text="Trier" TextColor="Purple" FontAttributes="Bold"/>
+                <Picker Title="Sélectionner pour trier..." x:Name="pickTrier" HorizontalOptions="Center" WidthRequest="230" SelectedIndexChanged="pickTrier_SelectedIndexChanged"  Margin="0,0,0,30">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Création commande ↓</x:String>
+                            <x:String>Création commande ↑</x:String>
+                            <x:String>Dernière mise à jour ↓</x:String>
+                            <x:String>Dernière mise à jour ↑</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </VerticalStackLayout>
+            <ScrollView Grid.Column="1" Padding="0,0,0,20">
+                <VerticalStackLayout>
+                    <CollectionView x:Name="colViewCommandes" ItemsSource="{Binding Commande}" SelectionMode="Single" SelectionChanged="colViewCommandes_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0" Grid.Row="0">
+                                    <Label Text="{Binding DateHeure}" FontSize="13" FontAttributes="Bold"/>
+                                        <Label FontAttributes="Bold" FontSize="16">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} {1}">
+                                                    <Binding Path="PrenomDestinataire" />
+                                                    <Binding Path="NomDestinataire" />
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
+                                    <Label Text="{Binding Id, StringFormat='{}Num. Commande : {0}'}" TextColor="Gray" FontSize="13"/>
+                                    </StackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" VerticalOptions="Center" HorizontalOptions="End">
+                                        <Label Text="{Binding DateDernierStatut}" HorizontalOptions="End" FontSize="12" FontAttributes="Bold"/>
+                                        <Border Padding="15,3" HorizontalOptions="End" StrokeShape="RoundRectangle 10" Stroke="Transparent" StrokeThickness="1.5">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="1">
+                                                    <Setter Property="Stroke" Value="#581845" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="2">
+                                                    <Setter Property="Stroke" Value="#900C3F" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="3">
+                                                    <Setter Property="Stroke" Value="#534cd9" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="4">
+                                                    <Setter Property="Stroke" Value="#3d91f1" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="5">
+                                                    <Setter Property="Stroke" Value="#32d452" />
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center"  FontAttributes="Bold">
+                                                    <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="1">
+                                                            <Setter Property="Text" Value="Non validé" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="2">
+                                                            <Setter Property="Text" Value="Préparation" />
+                                                        </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="3">
+                                                            <Setter Property="Text" Value="Pris en charge" />
+                                                        </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="4">
+                                                            <Setter Property="Text" Value="Acheminement" />
+                                                        </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="5">
+                                                            <Setter Property="Text" Value="Livré" />
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>

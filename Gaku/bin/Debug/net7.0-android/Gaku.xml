@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gaku</name>
+    </assembly>
+    <members>
+        <member name="M:Gaku.Contexte.GetLeClient(System.Int32)">
+            <summary>
+            Retourne le client de la commande passée en paramètre.
+            </summary>
+            <param name="id">ID du client</param>
+            <exception cref="T:System.Exception">Erreur survenue durant la récupération du client</exception>
+        </member>
+        <member name="M:Gaku.Contexte.GetProduitsCommande(System.Int32)">
+            <summary>
+            Récupère les produits d'une commande.
+            </summary>
+            <param name="id">ID de la commande.</param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Gaku.Contexte.EditSeuilProduit(System.Int32,System.Int32)">
+            <summary>
+            Modifie le seuil d'alerte d'un produit (album)
+            </summary>
+            <param name="id">id du produit à modifier</param>
+            <param name="newSeuil">Nouveau seuil</param>
+            <returns>Le nouveau seuil confirmé par l'API.</returns>
+        </member>
+    </members>
+</doc>

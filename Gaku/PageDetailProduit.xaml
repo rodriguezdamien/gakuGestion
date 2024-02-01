@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gaku.PageDetailProduit"
+             Title="PageDetailProduit"
+             x:Name="contentPageProduit"
+             NavigationPage.HasNavigationBar="False"
+             Loaded="contentPageProduit_Loaded">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 5,5,5,5" />
+        </Style>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <Button x:Name="btnBack" Clicked="btnBack_Clicked" CornerRadius="10000" ImageSource="arrowleft.png" Padding="10" Background="White" TextColor="Black" AbsoluteLayout.LayoutBounds="15,15" WidthRequest="40" HeightRequest="40" ZIndex="5">
+        </Button>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Container pour centrer les éléments du sidemenu -->
+            
+            <VerticalStackLayout Grid.Column="0" Padding="0">
+                <Grid>
+                    <VerticalStackLayout ZIndex="3" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Source="{Binding UriImage, StringFormat='{}http://10.0.2.2/gakuAPI/resources/cover/{0}'}" WidthRequest="250" HeightRequest="250" />
+                        <Label Text="{Binding Nom}" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="{Binding NomCreateur}" TextColor="White" />
+                        <Label Text="{Binding AffichageID}" TextColor="White" Opacity="0.65"/>
+                    </VerticalStackLayout>
+                    <BoxView WidthRequest="280" HeightRequest="755" Color="Black" Opacity="0.8" ZIndex="2"/>
+                    <Image Source="{Binding UriImage, StringFormat='{}http://10.0.2.2/gakuAPI/resources/cover/{0}'}" WidthRequest="280" HeightRequest="755" Aspect="AspectFill" />
+
+                </Grid>
+            </VerticalStackLayout>
+            <!-- 
+            Style pour les alertes
+            <Border VerticalOptions="Center" Grid.Column="2" StrokeThickness="1.3" Background="#ffdbb5" Stroke="#ff8000" Padding="13" HorizontalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5"/>
+                </Border.StrokeShape>
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Label Text="!" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="17" FontAttributes="Bold" TextColor="#ff8000" />
+                    <Label Text="Alerte seuil" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" TextColor="#ff8a14" />
+                </VerticalStackLayout>
+            </Border>
+            -->
+            <Grid Grid.Column="1" Padding="35">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0">
+                    <Grid>
+                        <Label Text="Stock actuel" FontSize="17" FontAttributes="Bold"/>
+                        <Label Text="{Binding Stock}" FontSize="50" FontAttributes="Bold" Margin="0,20"/>
+                        <!--<Button Text="Ajouter" x:Name="btnAjouter" Clicked="BtnAjouter_Clicked" ="0.5,1" VerticalStackLayout.LayoutFlags="PositionProportional" Background="Black" FontAttributes="Bold" Padding="30,5" CornerRadius="25"/>-->
+                    </Grid>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1">
+                    <VerticalStackLayout>
+                        <Label Text="Commandé" FontSize="17" FontAttributes="Bold"/>
+                        <Label Text="{Binding QteCommande, StringFormat='{}{0}x'}" x:Name="lblQteCommande" FontSize="50" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0">
+                    <Grid>
+                        <Label Text="Seuil d'alerte" FontSize="17" FontAttributes="Bold"/>
+                        <Label Text="{Binding AlerteSeuil}" FontSize="50" FontAttributes="Bold" Margin="0,20" x:Name="lblSeuil"/>
+                        <Button Text="Modifier le seuil" x:Name="btnAlerteSeuil" Clicked="btnAlerteSeuil_Clicked" Background="Black" FontAttributes="Bold" Padding="30,5" CornerRadius="25" VerticalOptions="End"/>
+                    </Grid>
+                </Border>   
+                <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Padding="0">
+                    <AbsoluteLayout>
+                      <Label Text="Commandes" FontSize="17" HorizontalOptions="End" FontAttributes="Bold" Margin="10"/>
+                        <ScrollView>
+                            <Grid Margin="0,40">
+                                <CollectionView x:Name="colViewCommandes" ItemsSource="{Binding Commande}" SelectionMode="Single" SelectionChanged="colViewCommandes_SelectionChanged">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid RowDefinitions="*,*" ColumnDefinitions="*,*" Padding="0,6" WidthRequest="284">
+                                                <Label FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="14" Margin="15,0">
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="{}{0} {1}">
+                                                            <Binding Path="PrenomDestinataire"/>
+                                                            <Binding Path="NomDestinataire" />
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                                <Label Text="{Binding Id, StringFormat='{}Commande n°{0}'}" Grid.Row="1" Grid.Column="0" Margin="15,0" FontSize="12"/>
+                                                <Border Grid.Column="1" Grid.RowSpan="2" Padding="14,2" HorizontalOptions="End" StrokeShape="RoundRectangle 10" VerticalOptions="Center" Margin="15,0">
+                                                    <Border.Triggers>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="1">
+                                                            <Setter Property="Stroke" Value="#581845" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="2">
+                                                            <Setter Property="Stroke" Value="#900C3F" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="3">
+                                                            <Setter Property="Stroke" Value="#534cd9" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="4">
+                                                            <Setter Property="Stroke" Value="#3d91f1" />
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding IdStatutActuel}" Value="5">
+                                                            <Setter Property="Stroke" Value="#32d452" />
+                                                        </DataTrigger>
+                                                    </Border.Triggers>
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center"  FontAttributes="Bold" FontSize="12">
+                                                        <Label.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="1">
+                                                                <Setter Property="Text" Value="Non validé" />
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="2">
+                                                                <Setter Property="Text" Value="Préparation" />
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="3">
+                                                                <Setter Property="Text" Value="Pris en charge" />
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="4">
+                                                                <Setter Property="Text" Value="Acheminement" />
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="5">
+                                                                <Setter Property="Text" Value="Livré" />
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </ScrollView>
+                    </AbsoluteLayout>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="0">
+                    <VerticalStackLayout>
+                        <Label Text="Prix" FontSize="17" FontAttributes="Bold"/>
+                        <Label Text="{Binding Prix,StringFormat='{}{0} €'}" FontSize="50" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>

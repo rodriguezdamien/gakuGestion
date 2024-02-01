@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gaku.PageGestionStock"
+             Title="PageGestionStock"
+             NavigationPage.HasNavigationBar="False"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>  
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="15" />
+        </Style>
+
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <Button x:Name="btnBack" Clicked="btnBack_Clicked" CornerRadius="10000" ImageSource="arrowleft_white.png" Padding="10" Background="Black"  AbsoluteLayout.LayoutBounds="15,15" WidthRequest="40" HeightRequest="40" ZIndex="5" ContentLayout="{OnPlatform WinUI='Top,-2'}"/>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <!-- Container pour centrer les éléments du sidemenu -->
+
+            <VerticalStackLayout WidthRequest="230" Grid.Column="0" Margin="0,80" HorizontalOptions="Center">
+                <Label Text="Filtres" Margin="0,0,0,30" FontSize="30" FontAttributes="Bold"/>
+                <Label Text="Rechercher" TextColor="Purple" FontAttributes="Bold"/>
+                <Entry x:Name="entryRecherche" Placeholder="Saisissez votre recherche..." TextChanged="Filtrage"  WidthRequest="230"  Margin="0,0,0,20"></Entry>
+                <Label Text="Evenement" TextColor="Purple" FontAttributes="Bold"/>
+                <Picker x:Name="pickEvent" Title="Sélectionner un événement ..." SelectedIndexChanged="pickEvent_SelectedIndexChanged" HorizontalOptions="Center" WidthRequest="230"   Margin="0,0,0,20"/>
+                <Label IsVisible="False" Text="Edition" TextColor="Purple" FontAttributes="Bold"/>
+                <Picker IsVisible="False" Title="Sélectionner une édition ..." x:Name="pickEdition" SelectedIndexChanged="Filtrage" HorizontalOptions="Center" WidthRequest="230">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>M3-53</x:String>
+                            <x:String>M3-52</x:String>
+                            <x:String>M3-51</x:String>
+                            <x:String>M3-50</x:String>
+                            <x:String>M3-49</x:String>
+                            <x:String>M3-48</x:String>
+                            <x:String>M3-47</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </VerticalStackLayout>
+            <!-- 
+            Style pour les alertes
+            
+            -->
+            <ScrollView Grid.Column="1" Padding="0,0,0,20">
+                <VerticalStackLayout>
+                    <CollectionView x:Name="colViewProduits" ItemsSource="{Binding Produit}" SelectionMode="Single" SelectionChanged="colViewProduits_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Grid Padding="0,2" >
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding UriImage, StringFormat='{}http://10.0.2.2/gakuAPI/resources/cover/{0}'}" Grid.Column="0"  WidthRequest="125" HeightRequest="125" VerticalOptions="Center" HorizontalOptions="Start">
+
+                                    </Image>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                        <Label Text="{Binding AffichageID}" TextColor="Gray" />
+                                        <Label Text="{Binding Nom}" FontAttributes="Bold" />
+                                        <Label Text="{Binding NomCreateur}" />
+                                    </VerticalStackLayout>
+                                    <Border VerticalOptions="Center" Grid.Column="2" StrokeThickness="1.3" Background="#ffdbb5" Stroke="#ff8000" Padding="13" HorizontalOptions="Center" IsVisible="False">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                     Binding="{Binding IsEnAlerte}" Value="True">
+                                                <Setter Property="IsVisible" Value="True" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Stock}" TargetType="Border" Value="0">
+                                                <Setter Property="Stroke" Value="Red" />
+                                                <Setter Property="Background" Value="#ffb0b0"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="5"/>
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout HorizontalOptions="Center">
+                                            <Label Text="!" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="20" FontAttributes="Bold" TextColor="#ff8000">
+                                                <Label.Triggers>
+                                                    <DataTrigger Binding="{Binding Stock}" TargetType="Label" Value="0">
+                                                        <Setter Property="TextColor" Value="Red" />
+                                                        <Setter Property="Text" Value="X"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Label Text="Alerte seuil" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" TextColor="#ff8a14" FontSize="12">
+                                                <Label.Triggers>
+                                                    <DataTrigger Binding="{Binding Stock}" TargetType="Label" Value="0">
+                                                        <Setter Property="TextColor" Value="Red" />
+                                                        <Setter Property="Text" Value="Stock épuisé"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End" Padding="20">
+                                        <Border VerticalOptions="Center" Background="Black" Padding="0,10,10,10" WidthRequest="160" Stroke="Black">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="5"/>
+                                            </Border.StrokeShape>
+                                            <StackLayout>
+                                                <Label Text="{Binding Prix, StringFormat='{}{0} €'}" HorizontalOptions="End" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                                <Label Text="{Binding Stock, StringFormat='{}Stock : {0} unité(s)'}" HorizontalOptions="End" TextColor="White" FontSize="14" FontAttributes="Bold"/>
+                                                <Label Text="{Binding AlerteSeuil, StringFormat='{}Seuil : {0}'}" HorizontalOptions="End" FontSize="11" TextColor="White"/>
+
+                                            </StackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>

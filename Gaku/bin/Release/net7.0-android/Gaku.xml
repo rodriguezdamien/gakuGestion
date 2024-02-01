@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gaku</name>
+    </assembly>
+    <members>
+        <member name="M:Gaku.Contexte.GetLeClient(System.String)">
+            <summary>
+            Retourne le client de la commande passée en paramètre.
+            </summary>
+            <param name="id">ID du client</param>
+            <exception cref="T:System.Exception">Erreur survenue durant la récupération du client</exception>
+        </member>
+    </members>
+</doc>

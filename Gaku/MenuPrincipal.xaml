@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- TODO :
+    - Ajouter logo
+    - Faire les évènements de clic pour rejoindre les différentes pages
+    -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gaku.MenuPrincipal"
+             Title=""
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <!-- Faut faire du mal au mec de chez Microsoft pour le ContentLayout -->
+            <Setter Property="ContentLayout" Value="{OnPlatform WinUI='Top,-30', Android='Bottom,0'}" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="WidthRequest" Value="400" />
+            <Setter Property="HeightRequest" Value="400" />
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="BorderWidth" Value="1" />
+
+        </Style>
+
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+        <ActivityIndicator x:Name="loadingIndicator" IsRunning="true" ZIndex="3" IsEnabled="False" WidthRequest="50" HeightRequest="50" AbsoluteLayout.LayoutBounds="0.5,0.5,50,50" AbsoluteLayout.LayoutFlags="PositionProportional" IsVisible="False"/>
+        <Border x:Name="loadingBg" Opacity="0" Background="Black" AbsoluteLayout.LayoutBounds="0.5,0.5,2,2" AbsoluteLayout.LayoutFlags="All" ZIndex="2" IsVisible="False"/>
+
+
+
+
+        <!-- Tout le malheur du monde à cette TitleBar-->
+    <!-- L'application a été conçu PRECISEMENT pour la tablette 8 pouces. Il est possible de rendre l'application "responsive", mais n'étant pas demandé, il n'a pas été prévu dans ce code.-->
+    <VerticalStackLayout HorizontalOptions="Center" AbsoluteLayout.LayoutBounds="0.5,0" AbsoluteLayout.LayoutFlags="PositionProportional" ZIndex="1">
+        <Label Text="Bienvenue." StyleClass="bienvenueText" HorizontalTextAlignment="Center" FontSize="30" Margin="0,60,0,30" />
+        
+        <!-- Pour le layoutBounds = "x,y,largeur,taille" -->
+        <!-- La largeur est à 1 pour aller avec le LayoutFlag "SizeProportional, qui est compris dans le "All", qui déclare tout les flags.-->
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="30">
+            <Button 
+                    Text="Gestion des stocks"
+                    ImageSource="stock.png"
+                    x:Name="btnGestionStock"
+                    Clicked="btnGestionStock_Clicked"
+                    />
+
+            <Button Text="Gestion des commandes"
+                    ImageSource="livraison.png"
+                    x:Name="btnGestionCommandes"
+                    Clicked="btnGestionCommandes_Clicked"
+
+                    
+            />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+    </AbsoluteLayout>
+</ContentPage>

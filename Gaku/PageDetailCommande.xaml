@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gaku.PageDetailCommande"
+             x:Name="contentPageCommande"
+             NavigationPage.HasNavigationBar="False"
+             Loaded="contentPageCommande_Loaded">
+    <AbsoluteLayout>
+        
+        <Border x:Name="promptBorder" AbsoluteLayout.LayoutBounds="0.5,0.5,0.45,0.32" AbsoluteLayout.LayoutFlags="All" ZIndex="3" StrokeShape="RoundRectangle 5" IsEnabled="False" Opacity="0" Background="White">
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </Border.GestureRecognizers>
+            <VerticalStackLayout Margin="20" VerticalOptions="Center">
+                <Label Text="Mettre à jour la commande" FontSize="18" FontAttributes="Bold" Margin="0,0,0,20" />
+
+                <Label Text="Le statut suivant est : ???" Margin="0,0,0,10">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="1">
+                            <Setter Property="Text" Value="Le statut suivant est : Préparation" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="2">
+                            <Setter Property="Text" Value="Le statut suivant est : Pris en charge" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="3">
+                            <Setter Property="Text" Value="Le statut suivant est : Acheminement" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="4">
+                            <Setter Property="Text" Value="Le statut suivant est : Livré" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Label Text="Sélectionnez une date et une heure pour ce statut." />
+                <HorizontalStackLayout Margin="0,10" HorizontalOptions="Center">
+                    <DatePicker x:Name="datePickStatut"  WidthRequest="{OnPlatform Android=100}" FontSize="15"/>
+                    <TimePicker x:Name="timePickStatut" WidthRequest="{OnPlatform Android=100}" FontSize="15"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="End" VerticalOptions="End">
+                    <Button x:Name="btnValider" Clicked="btnValider_Clicked" Text="Mettre à jour" BackgroundColor="Black" WidthRequest="150" FontAttributes="Bold" CornerRadius="25"/>
+                    <Button x:Name="btnAnnuler" Clicked="btnAnnuler_Clicked" Text="Annuler" BackgroundColor="Black" WidthRequest="100" FontAttributes="Bold" CornerRadius="25" Margin="10,0"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+        <Border x:Name="promptBg" Background="Black" AbsoluteLayout.LayoutBounds="0.5,0.5,2,2" AbsoluteLayout.LayoutFlags="All" ZIndex="2" IsEnabled="False" Opacity="1" IsVisible="False">
+            <!-- https://learn.microsoft.com/fr-fr/dotnet/maui/fundamentals/gestures/tap?view=net-maui-8.0 -->
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer x:Name="tapPromptBg" Tapped="tapPromptBg_Tapped"/>
+            </Border.GestureRecognizers>
+        </Border>
+        <Button x:Name="btnBack" Clicked="btnBack_Clicked" CornerRadius="10000" ImageSource="arrowleft.png" Padding="10" Background="White" TextColor="Black" AbsoluteLayout.LayoutBounds="15,15" WidthRequest="40" HeightRequest="40" ZIndex="5">
+        </Button>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.5*" />
+            </Grid.ColumnDefinitions>
+            <!-- Container pour centrer les éléments du sidemenu -->
+            
+            <VerticalStackLayout Grid.Column="0" Padding="0">
+                <Grid Background="#683291" HeightRequest="755">
+                    <VerticalStackLayout ZIndex="3" Padding="70,0" VerticalOptions="Center">
+                        <Label Text="{Binding Id, StringFormat='{}Commande n°{0}'}" TextColor="White" FontSize="15" Opacity="0.65"/>
+                        <Label TextColor="White" FontSize="30" FontAttributes="Bold">
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="PrenomDestinataire" />
+                                <Binding Path="NomDestinataire" />
+                            </MultiBinding>
+                        </Label>
+                        <Label Text="{Binding AdresseLivraison}" TextColor="White" FontSize="15"/>
+                        <Label TextColor="White" FontSize="15">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="CpLivraison" />
+                                    <Binding Path="VilleLivraison" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label Text="{Binding NumTelDestinataire}" TextColor="White" FontSize="15"/>
+
+                        <Label Text="Note de commande :" TextColor="White" Margin="0,30,0,0" FontSize="17" FontAttributes="Bold"/>
+                        <Label Text="{Binding Note}" TextColor="White" />
+
+                        <!-- c'est pas du chatgpt je promets c'est juste que je découvre au fur à mesure les raccourcis-->
+                        <Grid Margin="0,100,0,0" RowDefinitions="*" ColumnDefinitions="*,5*" ColumnSpacing="20">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 5"  HeightRequest="65" WidthRequest="65" StrokeThickness="2">
+                                <Image Source="livraison.png" Background="White"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Transporteur" TextColor="White" />
+                            <Label Text="S.A Roule Vite" TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1" Padding="30">
+                <Label Text="Contenu de la commande" Margin="0,0,0,10"></Label>
+                <ScrollView HeightRequest="270">
+                    <CollectionView x:Name="colViewProduits" ItemsSource="{Binding ProduitCommande}" SelectionMode="Single" SelectionChanged="colViewProduits_SelectionChanged">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                 <VerticalStackLayout>
+                                     <Grid RowDefinitions="*" ColumnDefinitions="*,5*,*" ColumnSpacing="20">
+                                         <Border Grid.Column="0" StrokeShape="RoundRectangle 5"  HeightRequest="60" WidthRequest="60">
+                                            <Image Source="{Binding UriImage, StringFormat='{}http://10.0.2.2/gakuAPI/resources/cover/{0}'}" Background="White"/>
+                                         </Border>
+                                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <Label Text="{Binding Nom}" FontAttributes="Bold"/>
+                                             <Label Text="{Binding NomCreateur}" />
+                                         </VerticalStackLayout>
+                                         <Label Grid.Column="2"  Text="{Binding Qte, StringFormat='{}x{0}'}" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                     </Grid>
+                                 </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+                <Border StrokeShape="RoundRectangle 5" Padding="10" Margin="0,30">
+                    <VerticalStackLayout>
+                        <Label Text="Statut de la commande" Margin="0,0,0,10" />
+                        <CollectionView x:Name="colViewStatuts" ItemsSource="{Binding Statut}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <HorizontalStackLayout Spacing="15" Margin="0,0,0,5">
+                            <Border WidthRequest="180" StrokeShape="RoundRectangle 20" Padding="2" BackgroundColor="{Binding CouleurStatut}" StrokeThickness="2" VerticalOptions="Center" >
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Id}" Value="1">
+                                                    <Setter Property="Stroke" Value="#581845" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Id}" Value="2">
+                                                    <Setter Property="Stroke" Value="#900C3F" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Id}" Value="3">
+                                                    <Setter Property="Stroke" Value="#534cd9" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Id}" Value="4">
+                                                    <Setter Property="Stroke" Value="#3d91f1" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Id}" Value="5">
+                                                    <Setter Property="Stroke" Value="#32d452" />
+                                                </DataTrigger>
+                                            </Border.Triggers>  
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center"  FontAttributes="Bold">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Id}" Value="1">
+                                                        <Setter Property="Text" Value="Non validé" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Id}" Value="2">
+                                                        <Setter Property="Text" Value="Préparation" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Id}" Value="3">
+                                                        <Setter Property="Text" Value="Pris en charge" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Id}" Value="4">
+                                                        <Setter Property="Text" Value="Acheminement" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Id}" Value="5">
+                                                        <Setter Property="Text" Value="Livré" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+                            <Image IsVisible="False" Source="checkmark.png" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                            <Label Text="{Binding DateStatut}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Label>
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="1">
+                                    <Setter Property="Text" Value="La commande n'a pas encore été validé." />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="2">
+                                    <Setter Property="Text" Value="La commande est en cours de préparation." />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="3">
+                                    <Setter Property="Text" Value="Le colis de la commande a été confié au transporteur." />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="4">
+                                    <Setter Property="Text" Value="Le colis est en route vers le destinataire." />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IdStatutActuel}" Value="5">
+                                    <Setter Property="Text" Value="Le colis a bien été livré au destinataire." />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <Button x:Name="btnMAJ" Clicked="btnMAJ_Clicked" BackgroundColor="Black" TextColor="White" Text="+ Mettre à jour la commande" FontAttributes="Bold" WidthRequest="300" Margin="15" HorizontalOptions="End" CornerRadius="25">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IdStatutActuel}" Value="5">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+    </AbsoluteLayout>
+</ContentPage>
