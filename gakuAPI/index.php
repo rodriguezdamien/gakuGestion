@@ -1,14 +1,7 @@
 <?php
 
-/*
-                                TODO :
-                                 - Gérer le changement de statut d'une commande (page détail produit)
-
-                                */
-
 header("Cache-Control: no-cache, must-revalidate");
 header("pragma: no-cache");
-
 
 try {
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
